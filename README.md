@@ -101,6 +101,7 @@ Para que los servicios api-auth y api-transaction obtengan su configuración des
 ## 📌 Registrar Configuración en Consul en Windows
 Ejecuta los siguientes comandos para registrar la configuración en Consul KV:
 Constatar de que en consul el formato de los arhivos que se crean sean YAML
+Aclaracion las credenciales de base de datos puestas son solo un ejemplo.
 ```yaml
 $yamlConfig = @"
 spring:
