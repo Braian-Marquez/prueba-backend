@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "empresas")
@@ -29,4 +30,7 @@ public class Empresa {
     
     @Column(name = "activa", nullable = false)
     private Boolean activa = true;
+    
+    @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Transferencia> transferencias;
 } 

@@ -5,6 +5,7 @@ import com.api.transaction.models.mapper.EmpresaMapper;
 import com.api.transaction.models.repository.EmpresaRepository;
 import com.api.transaction.models.request.EmpresaRequest;
 import com.api.transaction.models.response.EmpresaResponse;
+import com.api.transaction.models.response.EmpresaConTransferenciasResponse;
 import com.api.transaction.service.EmpresaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,11 @@ public class EmpresaServiceImpl implements EmpresaService {
     
     @Override
     @Transactional(readOnly = true)
-    public List<EmpresaResponse> getEmpresasConTransferenciasUltimoMes() {
+    public List<EmpresaConTransferenciasResponse> getEmpresasConTransferenciasUltimoMes() {
         LocalDateTime fechaInicio = LocalDateTime.now().minusMonths(1);
         LocalDateTime fechaFin = LocalDateTime.now();
-        
-        List<Empresa> empresas = empresaRepository.findEmpresasConTransferenciasEnPeriodo(fechaInicio, fechaFin);
-        return empresaMapper.toResponseList(empresas);
+        List<Empresa> empresas = empresaRepository.findEmpresasConTransferenciasEnPeriodoWithTransferencias(fechaInicio, fechaFin);
+        return empresaMapper.toResponseWithTransferenciasList(empresas);
     }
     
     @Override

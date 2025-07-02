@@ -2,6 +2,7 @@ package com.api.transaction.controller;
 
 import com.api.transaction.models.request.EmpresaRequest;
 import com.api.transaction.models.response.EmpresaResponse;
+import com.api.transaction.models.response.EmpresaConTransferenciasResponse;
 import com.api.transaction.service.EmpresaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class TransactionController {
     private final EmpresaService empresaService;
  
     @GetMapping("/transferencias-ultimo-mes")
-    public ResponseEntity<List<EmpresaResponse>> getEmpresasConTransferenciasUltimoMes() {
-        List<EmpresaResponse> empresas = empresaService.getEmpresasConTransferenciasUltimoMes();
+    public ResponseEntity<List<EmpresaConTransferenciasResponse>> getEmpresasConTransferenciasUltimoMes() {
+        List<EmpresaConTransferenciasResponse> empresas = empresaService.getEmpresasConTransferenciasUltimoMes();
         return ResponseEntity.ok(empresas);
     }
     

@@ -1,8 +1,10 @@
 package com.api.transaction.models.mapper;
 
 import com.api.commons.models.entity.Empresa;
+import com.api.commons.models.entity.Transferencia;
 import com.api.transaction.models.request.EmpresaRequest;
 import com.api.transaction.models.response.EmpresaResponse;
+import com.api.transaction.models.response.EmpresaConTransferenciasResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -34,6 +36,40 @@ public class EmpresaMapper {
     public List<EmpresaResponse> toResponseList(List<Empresa> empresas) {
         return empresas.stream()
                 .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+    
+    public EmpresaConTransferenciasResponse toResponseWithTransferencias(Empresa empresa) {
+        List<EmpresaConTransferenciasResponse.TransferenciaData> transferenciasData = 
+            empresa.getTransferencias().stream()
+                .map(this::toTransferenciaData)
+                .collect(Collectors.toList());
+        
+        return new EmpresaConTransferenciasResponse(
+                empresa.getId(),
+                empresa.getCuit(),
+                empresa.getRazonSocial(),
+                empresa.getFechaAdhesion(),
+                empresa.getActiva(),
+                transferenciasData
+        );
+    }
+    
+    private EmpresaConTransferenciasResponse.TransferenciaData toTransferenciaData(Transferencia transferencia) {
+        return new EmpresaConTransferenciasResponse.TransferenciaData(
+                transferencia.getId(),
+                transferencia.getImporte(),
+                transferencia.getEmpresa().getId(),
+                transferencia.getCuentaDebito(),
+                transferencia.getCuentaCredito(),
+                transferencia.getFechaTransferencia(),
+                transferencia.getEstado()
+        );
+    }
+    
+    public List<EmpresaConTransferenciasResponse> toResponseWithTransferenciasList(List<Empresa> empresas) {
+        return empresas.stream()
+                .map(this::toResponseWithTransferencias)
                 .collect(Collectors.toList());
     }
 } 

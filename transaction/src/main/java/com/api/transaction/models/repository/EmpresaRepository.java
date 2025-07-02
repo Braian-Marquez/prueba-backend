@@ -33,4 +33,14 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
             @Param("fechaInicio") LocalDateTime fechaInicio,
             @Param("fechaFin") LocalDateTime fechaFin
     );
+    
+    @Query("SELECT DISTINCT e FROM Empresa e " +
+           "JOIN FETCH e.transferencias t " +
+           "WHERE t.fechaTransferencia >= :fechaInicio " +
+           "AND t.fechaTransferencia < :fechaFin " +
+           "AND e.activa = true")
+    List<Empresa> findEmpresasConTransferenciasEnPeriodoWithTransferencias(
+            @Param("fechaInicio") LocalDateTime fechaInicio,
+            @Param("fechaFin") LocalDateTime fechaFin
+    );
 } 
