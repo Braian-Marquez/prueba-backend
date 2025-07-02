@@ -1,4 +1,4 @@
-FROM braianm95/api-commons:1.0.1 AS build
+FROM commons-1.0.0 AS build
 
 WORKDIR /app
 
