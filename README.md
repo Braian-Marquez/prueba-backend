@@ -188,6 +188,8 @@ services:
   api-auth:
     image: braianm95/api-auth
     container_name: api-auth
+    ports:
+      - "8081:8081"
     environment:
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
@@ -199,9 +201,12 @@ services:
   api-transaction:
     image: braianm95/api-transaction
     container_name: api-transaction
+    ports:
+      - "8082:8082"
     environment:
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
+      - SPRING_APPLICATION_NAME=api-transaction
     depends_on:
       - api-gateway
     networks:
@@ -210,6 +215,8 @@ services:
   api-gateway:
     image: braianm95/api-gateway
     container_name: api-gateway
+    ports:
+      - "8080:8080"
     environment:
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
